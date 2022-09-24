@@ -1,25 +1,27 @@
 import os
 import sys
-
-
+import csv 
 
 
 def jls(path):
 	for file in os.listdir(path):
+
 		result = os.path.join(path, file)
 		if(file.endswith('.java')):
+
 			f = open(result)
-
-
-			strResult = ', '.join(wordFinder(f.readlines()))
-
+			strResult = ','.join(wordFinder(f.readlines()))
 
 			f.close()
 
-			print(f"{result}, {strResult}")
+			strResult = f"{result}, {strResult}"
+			tabResult = strResult.split(',') 
+			tabValue.append(tabResult)
+
+
 		elif os.path.isdir(result) :
 			jls(result)
-
+	return tabValue
 def wordFinder(f):
 	tabResult = []
 	for line in f:
@@ -39,4 +41,13 @@ def start(string):
 		return f"{string}"
 	else:
 		return string
-jls(start(sys.argv[1]))
+
+tabValue = []
+
+tab = jls(start(sys.argv[1]))
+
+with open('jls.csv', 'w', newline='') as myfile:
+     wr = csv.writer(myfile, delimiter=',')
+     wr.writerows(tab)
+
+print("Done")
