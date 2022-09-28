@@ -47,7 +47,7 @@ tabValue = []
 tab = jls(start(sys.argv[1]))
 
 with open('jls.csv', 'w', newline='') as myfile:
-     wr = csv.writer(myfile, delimiter=',')
-     wr.writerows(tab)
+    wr = csv.writer(myfile, delimiter=',')
+    wr.writerows(tab)
 
 print("Done")

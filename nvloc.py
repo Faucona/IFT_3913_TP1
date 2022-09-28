@@ -1,5 +1,6 @@
 import os
 import sys
+import pickle
 
 
 def nvloc(file):
@@ -22,5 +23,13 @@ def start(string):
 	else:
 		return string
 
+out = nvloc(start(sys.argv[1]))
+print(out)
+# save output as out.pickle
+with open('nvloc_out.pickle', 'wb') as f:
+	pickle.dump(out, f)
 
-print(nvloc(start(sys.argv[1])))
+
+
+
+

@@ -59,7 +59,7 @@ tabValue = []
 tab = lcsec(start(sys.argv[1], sys.argv[2]))
 
 
-with open('lsec.csv', 'w', newline='') as myfile:
+with open('lcsec.csv', 'w', newline='') as myfile:
      wr = csv.writer(myfile, delimiter=',')
      wr.writerows(tab)
 
