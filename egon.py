@@ -47,16 +47,6 @@ with open('lcsec.csv', 'r') as f:
     for i in range(matrix.shape[0]):
         matrix[i][4] = nvloc(matrix[i][0])
 
-    
-        
-
-print(matrix)
-
-# Utilisez le seuil de l’entée pour l’heuristique suivante : une classe est suspecte si ses métriques NVLOC et CSEC sont
-# tous les deux dans les <seuil>% supérieures de toutes les classes dans le dossier et sous-dossiers.
-# Par exemple, si le seuil est 10%, alors une classe est suspecte si ses métriques NVLOC et CSEC sont dans les 10% supérieures
-# de toutes les classes dans le dossier et sous-dossiers.
-#
 
 # get the threshold
 threshold = int(sys.argv[1])
@@ -65,4 +55,22 @@ threshold = int(sys.argv[1])
 num_classes = len(matrix)
 
 
+# convert matrix to pandas dataframe
+
+import pandas as pd
+df = pd.DataFrame(matrix, columns = ['path', 'package', 'class', 'csec', 'nvloc'])
+# cast column nvloc to float
+df['nvloc'] = df['nvloc'].astype(float)
+# cast column csec to float
+df['csec'] = df['csec'].astype(float)
+
+
+# get the nth % of the higher values of nvloc and csec
+nvloc_threshold = df['nvloc'].quantile(1 - threshold/100)
+csec_threshold = df['csec'].quantile(1 - threshold/100)
+
+# find god classes
+god_classes = df[(df['nvloc'] >= nvloc_threshold) & (df['csec'] >= csec_threshold)]['path'].tolist()
+
+print(len(god_classes))
 
