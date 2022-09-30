@@ -1,7 +1,6 @@
 import csv
 import sys
 import nvloc
-import copy
 import math
 
 tab = [] 
@@ -25,22 +24,22 @@ def lcsec(elem):
 	return int(elem)
 
 threshold = math.ceil(int(sys.argv[1])/100 *len(tab))
-print(threshold)
+
 tab1 = sorted(tab1,key=nvloc,reverse=True)
 tab2 = sorted(tab2,key=lcsec,reverse=True)
 
 temptab1 = [] 
-value = None
+
 
 for valueFound in tab1:
-	if ( (value == None or valueFound<value) and len(temptab1) <threshold):
+	if (len(temptab1) <threshold):
 		value = valueFound
 		temptab1.append(value)
 temptab2 = [] 
-value = None
-for valueFound in tab2:
 
-	if ( (value == None or int(valueFound)<value) and len(temptab2) <threshold ):
+
+for valueFound in tab2:
+	if (len(temptab2) <threshold ):
 		value = int(valueFound)
 		temptab2.append(value)
 
