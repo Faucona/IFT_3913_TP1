@@ -57,5 +57,8 @@ with open('egon.csv', 'w', newline='') as myfile:
      wr = csv.writer(myfile, delimiter=',')
      wr.writerows(god_classes)
 
+for god_class in god_classes :
+	print(god_class)
 print("Done")
-#print(len(god_classes))
+
+print(len(god_classes))
