@@ -1,76 +1,62 @@
-import numpy as np
 import csv
 import sys
-import os
-import pickle
+import nvloc
+import copy
+import math
 
-
-
-
-
-def nvloc(file):
-	if(file.endswith('.java')):
-			f = open(file)
-			finalCount = lineCounter(f.readlines())
-			f.close()
-
-			return finalCount
-
-def lineCounter(f):
-	count = 0
-	for line in f:
-		if(line != "\n"):
-			count+=1
-	return count
-def start(string):
-	if (not isinstance(string, str)):
-		return f"{string}"
-	else:
-		return string
-
-
-
-
-
-
-
-
-
-# read lcsec.csv and put values in matrix and add nvloc values to matrix at the last column
+tab = [] 
+tab1 = []
+tab2 = []
 with open('lcsec.csv', 'r') as f:
     reader = csv.reader(f)
     data = list(reader)
-    matrix = np.array(data)
-    # add colomn to matrix
-    matrix = np.append(matrix, np.zeros((matrix.shape[0],1)), axis=1)
-    # add nvloc values to matrix
-    for i in range(matrix.shape[0]):
-        matrix[i][4] = nvloc(matrix[i][0])
+    for row in data:
+    	if(len(row) == 4):
+    		row.append(nvloc.nvloc(row[0]))
+    		tab.append(row)
+    		tab1.append(row[-1])
+    		tab2.append(row[-2])
 
 
-# get the threshold
-threshold = int(sys.argv[1])
+def nvloc(elem):
+	return elem
 
-# get the number of classes
-num_classes = len(matrix)
+def lcsec(elem):
+	return int(elem)
 
+threshold = math.ceil(int(sys.argv[1])/100 *len(tab))
+print(threshold)
+tab1 = sorted(tab1,key=nvloc,reverse=True)
+tab2 = sorted(tab2,key=lcsec,reverse=True)
 
-# convert matrix to pandas dataframe
+temptab1 = [] 
+value = None
 
-import pandas as pd
-df = pd.DataFrame(matrix, columns = ['path', 'package', 'class', 'csec', 'nvloc'])
-# cast column nvloc to float
-df['nvloc'] = df['nvloc'].astype(float)
-# cast column csec to float
-df['csec'] = df['csec'].astype(float)
+for valueFound in tab1:
+	if ( (value == None or valueFound<value) and len(temptab1) <threshold):
+		value = valueFound
+		temptab1.append(value)
+temptab2 = [] 
+value = None
+for valueFound in tab2:
 
+	if ( (value == None or int(valueFound)<value) and len(temptab2) <threshold ):
+		value = int(valueFound)
+		temptab2.append(value)
 
-# get the nth % of the higher values of nvloc and csec
-nvloc_threshold = df['nvloc'].quantile(1 - threshold/100)
-csec_threshold = df['csec'].quantile(1 - threshold/100)
+god_classes = []
+counter = 0 
+for row in tab:
+	if(counter == threshold):
+		break
 
-# find god classes
-god_classes = df[(df['nvloc'] >= nvloc_threshold) & (df['csec'] >= csec_threshold)]['path'].tolist()
+	if (row[-1] in temptab1 and int(row[-2]) in temptab2):
+		god_classes.append(row)
+		counter += 1 
 
-print(len(god_classes))
+with open('egon.csv', 'w', newline='') as myfile:
+     wr = csv.writer(myfile, delimiter=',')
+     wr.writerows(god_classes)
 
+print("Done")
+#print(len(god_classes))

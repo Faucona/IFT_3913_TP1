@@ -7,6 +7,7 @@ def jls(path):
 	for file in os.listdir(path):
 
 		result = os.path.join(path, file)
+		#print(result)
 		if(file.endswith('.java')):
 
 			f = open(result)
@@ -25,13 +26,14 @@ def jls(path):
 def wordFinder(f):
 	tabResult = []
 	for line in f:
-		if "package " in line and "*" not in line and '"' not in line:
-			wordTab = line.split(" ")
+		if "package " in line and "*" not in line and '"' not in line and "//" not in line:
+			wordTab = line.split()
 			packageFound = wordTab[wordTab.index("package") + 1].replace(';','').replace('\n','')
 			tabResult.append(packageFound)
 
-		elif "class " in line and "*" not in line and '"' not in line:
-			wordTab = line.split(" ")
+		elif " class " in line and "*" not in line and '"' not in line and "//" not in line:
+			#print(line)
+			wordTab = line.split()
 			classFound = wordTab[wordTab.index("class") + 1]
 			tabResult.append(classFound)
 	return tabResult

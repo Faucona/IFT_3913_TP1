@@ -23,11 +23,16 @@ def start(string):
 	else:
 		return string
 
-out = nvloc(start(sys.argv[1]))
-print(out)
+
+if __name__ == "__main__":
+   out = nvloc(start(sys.argv[1]))
+   print(out)
+   #return out 
+#out = nvloc(start(sys.argv[1]))
+#print(out)
 # save output as out.pickle
-with open('nvloc_out.pickle', 'wb') as f:
-	pickle.dump(out, f)
+#with open('nvloc_out.pickle', 'wb') as f:
+	#pickle.dump(out, f)
 
 
 
