@@ -1,0 +1,11 @@
+Egon nous permet de detecter les classes divines. En terme de modularité, cela nous permet d'avoir une idée claire d'un excès de dépendences au sein d'un logiciel. Si on a trop de classes divines, on n'a 
+
+
+
+
+Ca me semle tout a fait correct
+
+
+
+
+
