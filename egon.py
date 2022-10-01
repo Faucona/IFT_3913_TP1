@@ -6,6 +6,8 @@ import math
 tab = [] 
 tab1 = []
 tab2 = []
+
+# open csv file
 with open('lcsec.csv', 'r') as f:
     reader = csv.reader(f)
     data = list(reader)
@@ -21,8 +23,10 @@ def nvloc(elem):
 	return elem
 
 def lcsec(elem):
+	# cast as int
 	return int(elem)
 
+# get the threshold from command line argument
 threshold = math.ceil(int(sys.argv[1])/100 *len(tab))
 
 tab1 = sorted(tab1,key=nvloc,reverse=True)
@@ -43,6 +47,8 @@ for valueFound in tab2:
 		value = int(valueFound)
 		temptab2.append(value)
 
+
+# find the god classes
 god_classes = []
 counter = 0 
 for row in tab:
@@ -53,6 +59,7 @@ for row in tab:
 		god_classes.append(row)
 		counter += 1 
 
+# write the god classes in a csv file
 with open('egon.csv', 'w', newline='') as myfile:
      wr = csv.writer(myfile, delimiter=',')
      wr.writerows(god_classes)

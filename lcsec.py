@@ -56,9 +56,10 @@ def start(folder,csvFile):
 		
 
 tabValue = []
+# read command line arguments 
 tab = lcsec(start(sys.argv[1], sys.argv[2]))
 
-
+# write csv file
 with open('lcsec.csv', 'w', newline='') as myfile:
      wr = csv.writer(myfile, delimiter=',')
      wr.writerows(tab)

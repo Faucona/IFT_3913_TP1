@@ -3,6 +3,7 @@ import sys
 import csv 
 
 
+# input : path to directory
 def jls(path):
 	for file in os.listdir(path):
 
@@ -46,8 +47,11 @@ def start(string):
 
 tabValue = []
 
+# read command line argument
 tab = jls(start(sys.argv[1]))
 
+
+# write csv file
 with open('jls.csv', 'w', newline='') as myfile:
     wr = csv.writer(myfile, delimiter=',')
     wr.writerows(tab)

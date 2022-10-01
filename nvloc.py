@@ -1,8 +1,9 @@
 import os
 import sys
-import pickle
 
 
+
+# count the number of lines in java file
 def nvloc(file):
 	if(file.endswith('.java')):
 			f = open(file)
@@ -11,6 +12,7 @@ def nvloc(file):
 
 			return finalCount
 
+# count the number of lines in given file
 def lineCounter(f):
 	count = 0
 	for line in f:
@@ -27,12 +29,7 @@ def start(string):
 if __name__ == "__main__":
    out = nvloc(start(sys.argv[1]))
    print(out)
-   #return out 
-#out = nvloc(start(sys.argv[1]))
-#print(out)
-# save output as out.pickle
-#with open('nvloc_out.pickle', 'wb') as f:
-	#pickle.dump(out, f)
+
 
 
 
